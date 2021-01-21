@@ -23,13 +23,33 @@ getValueAndKeys() {
     done
 }
 
+checkValidityKeysAndValues() {
+    local count=0
+    local opt="$1"
+
+    for ((i=1;i<${#input_keysOrValues[@]};i++)); do
+        if [[ ! "${input_keysOrValues[i]}" =~ [0-9]{1,} && ${opt} == "k" ]]; then
+            ((count++))
+        elif [[ ! "${input_keysOrValues[i]}" =~ [a-z]{1,} && ${opt} == "v" ]]; then
+            ((count++))
+        fi    
+    done
+
+    if [[ ${count} -ne 0 ]]; then
+        printf "\n\e[1;31m%s\e[0m\n\n" "ERROR -> ${usage}"
+        exit 1
+    fi
+}
+
 main() {
     pupulateUIDandVALUES
     while getopts ":kv" option; do
         case "${option}" in
-            k) getValueAndKeys "k"
+            k)  checkValidityKeysAndValues "k"
+                getValueAndKeys "k"
                ;;
-            v) getValueAndKeys "v"
+            v)  checkValidityKeysAndValues "v" 
+                getValueAndKeys "v"
                ;;   
             \?) printf "\n\e[31m%s\e[0m\n\n" "ERROR ${usage}"
                 exit 1
