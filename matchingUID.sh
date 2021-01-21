@@ -12,15 +12,32 @@ pupulateUIDandVALUES() {
 
 getValueAndKeys() {
     local given_input="${1}"
+    local counting=0
+    local -a error_array
     for ((j=1;j<${#input_keysOrValues[@]};j++)); do
+        counting=0
         for i in "${!elements[@]}"; do
             if [[ ${given_input} == "k" && ${input_keysOrValues[j]} == "${i}" ]]; then
                     printf "\e[1;32m%s \e[1;34m%s\e[0m \e[1;33m%s\e[0m\n" "${i}" "->" "${elements[i]}"
+                    break
             elif [[ ${given_input} == "v" && ${input_keysOrValues[j]} == "${elements[i]}" ]]; then
                     printf "\e[1;32m%s\e[0m \e[1;34m%s\e[0m \e[1;33m%s\e[0m\n" "${i}" "->" "${elements[i]}"
+                    break
+            else
+                ((counting++))        
             fi        
         done
+
+        if [[ ${counting} -eq ${#elements[@]} ]]; then
+            error_array+=("${input_keysOrValues[j]}")
+        fi
     done
+
+    if [[ ${#input_keysOrValues[@]} -ne 0 ]]; then
+          for k in "${!error_array[@]}"; do
+                printf "\e[1;31mERROR %s %s\e[0m\n" "[ ${error_array[k]} ]" "not found"
+          done  
+    fi
 }
 
 checkValidityKeysAndValues() {
