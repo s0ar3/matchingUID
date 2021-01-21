@@ -14,14 +14,10 @@ getValueAndKeys() {
     local given_input="${1}"
     for ((j=1;j<${#input_keysOrValues[@]};j++)); do
         for i in "${!elements[@]}"; do
-            if [[ ${given_input} == "k" ]]; then
-                if [[ ${input_keysOrValues[j]} == "${i}" ]]; then  
+            if [[ ${given_input} == "k" && ${input_keysOrValues[j]} == "${i}" ]]; then
                     printf "\e[1;32m%s \e[1;34m%s\e[0m \e[1;33m%s\e[0m\n" "${i}" "->" "${elements[i]}"
-                fi
-            elif [[ ${given_input} == "v" ]]; then
-                if [[ ${input_keysOrValues[j]} == "${elements[i]}" ]]; then  
+            elif [[ ${given_input} == "v" && ${input_keysOrValues[j]} == "${elements[i]}" ]]; then
                     printf "\e[1;32m%s\e[0m \e[1;34m%s\e[0m \e[1;33m%s\e[0m\n" "${i}" "->" "${elements[i]}"
-                fi
             fi        
         done
     done
