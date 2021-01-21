@@ -14,6 +14,7 @@ getValueAndKeys() {
     local given_input="${1}"
     local counting=0
     local -a error_array
+
     for ((j=1;j<${#input_keysOrValues[@]};j++)); do
         counting=0
         for i in "${!elements[@]}"; do
@@ -34,7 +35,7 @@ getValueAndKeys() {
     done
 
     if [[ ${#input_keysOrValues[@]} -gt 1 ]]; then
-          for k in "${!error_array[@]}"; do
+          for k in "${error_array[@]}"; do
                 printf "\e[1;31mERROR %s %s\e[0m\n" "[ ${error_array[k]} ]" "not found"
           done
     else
@@ -76,4 +77,6 @@ main() {
     done
 }
 
+printf "%30s\n" " " | tr ' ' '-'
 main "$@"
+printf "%30s\n" " " | tr ' ' '-'
