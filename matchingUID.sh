@@ -33,10 +33,12 @@ getValueAndKeys() {
         fi
     done
 
-    if [[ ${#input_keysOrValues[@]} -ne 0 ]]; then
+    if [[ ${#input_keysOrValues[@]} -gt 1 ]]; then
           for k in "${!error_array[@]}"; do
                 printf "\e[1;31mERROR %s %s\e[0m\n" "[ ${error_array[k]} ]" "not found"
-          done  
+          done
+    else
+        printf "\e[1;31m\nERROR %s\e[0m\n\n" "${usage}"        
     fi
 }
 
