@@ -35,7 +35,7 @@ getValueAndKeys() {
     done
 
     if [[ ${#input_keysOrValues[@]} -gt 0 ]]; then
-          for k in "${error_array[@]}"; do
+          for ((k=0;k<${#error_array[@]};k++)); do
                 printf "\e[1;31mERROR %s %s\e[0m\n" "[ ${error_array[k]} ]" "not found"
           done
     else
@@ -72,7 +72,8 @@ main() {
             v)  checkValidityKeysAndValues "v" 
                 getValueAndKeys "v"
                ;;   
-            \?) printf "\n\e[31m%s\e[0m\n\n" "ERROR ${usage}"
+            \?) printf "\e[31m%s\e[0m\n" "ERROR ${usage}"
+                printf "%30s\n" " " | tr ' ' '-'
                 exit 1
         esac
     done
