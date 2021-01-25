@@ -72,7 +72,7 @@ main() {
             v)  checkValidityKeysAndValues "v" 
                 getValueAndKeys "v"
                ;;   
-            \?) printf "\e[31m%s\e[0m\n" "ERROR ${usage}"
+            \?) printf "\e[1;31m%s\e[0m\n" "ERROR ${usage}"
                 printf "%30s\n" " " | tr ' ' '-'
                 exit 1
         esac
